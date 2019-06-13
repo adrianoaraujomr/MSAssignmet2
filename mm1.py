@@ -1,95 +1,29 @@
-<<<<<<< HEAD
-#/usr/bin/python3
-
-tr = 0
-es = 0
-tf = 0
-hc = 0
-hs = 9999
-
-def process_arrive_event():
-	global tr
-	global es
-	global tf
-	global hs 
-	global hc
-
-	if es == 0 :
-		es = 1
-		ts = generate_time()
-		hs = tr + ts
-	else :
-		tf = tf + 1
-
-	tec = generate_time()
-	hc = tr + tec
-
-def process_exit_event():
-	global tr
-	global es
-	global tf
-	global hs 
-
-	if tf > 0 :
-		tf = tf - 1
-		ts = generate_time()
-		hs = tr + ts
-	else :
-		es = 0
-		hs = 9999
-
-while True:
-	if hc < hs :
-		process_arrive_event()
-	else :
-		process_exit_event()
-
-	aux = att_statistics()
-	print(aux)
-
-
-=======
 #!/usr/bin/python3
 
 import math
 import random
+import random_nro as rnd
 import statistics as st
 
-def roletaServico(probS):
-	S = 0
-	r = 0
-	for i in range(len(probS)):
-		S += probS[i]
-		r = random.uniform(0,S)
-		if r > 0 and r <= 0.25:
-			return 3
-		elif r > 0.25 and r <= 0.35:
-			return 1
-		else:
-			return 2
+c_tipo = "det"
+s_tipo = "det"
+lf   = math.inf
+nro_eventos = 20
 
-def roletaChegada(probC):
-	S = 0
-	r = 0
-	for i in range(len(probC)):
-		S += probC[i]
-		r = random.uniform(0,S)
-		if r > 0 and r <= 0.15:
-			return 4
-		elif r > 0.15 and r <= 0.20:
-			return 1
-		elif r > 0.20 and r <= 0.30:
-			return 2
-		else:
-			return 3
+def set_params(params):
+	tipo, lf, nro_eventos = params
 
-def eventoChegada(tr,es,tf,hc,hs,probC,probS):
+def show_params():
+	print(tipo,lf,nro_eventos)
+
+def eventoChegada(tr,es,tf,hc,hs):
+	global tipo
 	tec = 0
 	tr = hc
 	ts = 0
 	if es == 0:
 		es = 1
-		ts = roletaServico(probS)
+		ts = generateTime(c_tipo)
 		hs = tr + ts
 	else:
 		tf += 1
@@ -99,12 +33,13 @@ def eventoChegada(tr,es,tf,hc,hs,probC,probS):
     
 	return tr,es,tf,hc,hs
     
-def eventoSaida(tr,es,tf,hc,hs,probC,probS):
+def eventoSaida(tr,es,tf,hc,hs):
+	global tipo
 	tr = hs
 	ts = 0
 	if tf > 0:
 		tf -= 1
-		ts = roletaServico(probS)
+		ts = generateTime(s_tipo)
 		hs = tr + ts
 	else:
 		es = 0
@@ -113,30 +48,24 @@ def eventoSaida(tr,es,tf,hc,hs,probC,probS):
 	return tr,es,tf,hc,hs
 
 
-def main():
-	str = ""
-	probS = [0.35,0.40,0.25]
-	probC = [0.20,0.30,0.35,0.15]
+	global nro_eventos 
+
 	tr = 0
 	es = 0
 	tf = 0
 	hc = 0
 	hs = math.inf
-    
-	nro_eventos = 20
+
 	i = 0
 	hc_ant = hc
 	aux = []
 
 	while i < nro_eventos:
 		if hc < hs:
-			tr,es,tf,hc,hs = eventoChegada(tr,es,tf,hc,hs,probC,probS)
-			str = "Chegada"
+			tr,es,tf,hc,hs = eventoChegada(tr,es,tf,hc,hs)
 		else:
-			tr,es,tf,hc,hs = eventoSaida(tr,es,tf,hc,hs,probC,probS)
-			str = "Saida"
+			tr,es,tf,hc,hs = eventoSaida(tr,es,tf,hc,hs)
 
-		print(str)
 		print("TR: ES: TF: HC: HS: ")
 		print(tr," ",es," ",tf," ",hc," ",hs)
 		i += 1
@@ -147,6 +76,3 @@ def main():
 	print("fim")
 	print(aux)
 	st.stats(aux)
-
-main()
->>>>>>> 0aaf470ab69ef4a3b69e27530b68f74858c2a1cd
