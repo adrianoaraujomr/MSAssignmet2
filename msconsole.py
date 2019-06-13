@@ -32,9 +32,22 @@ while msconsole:
 		break
 	elif res == "run":
 		if queue == 1 :
+			mm1.set_params([params["c_tipo"],
+					params["s_tipo"],
+					params["lf"],
+					params["nro_eventos"]])
+			rnd.set_params([params["a"],
+					params["b"],
+					params["m"],
+					params["seed"],
+					params["lambd"],
+					params["media"],
+					params["devioP"],
+					params["inf"],
+					params["sup"],])
 			mm1.run()
-		else :
-			mm2.run()
+#		else :
+#			mm2.run()
 	elif res == "help":
 		fd = open("commands.in","r")
 		for i in fd.readlines():

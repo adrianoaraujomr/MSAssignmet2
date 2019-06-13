@@ -11,10 +11,10 @@ lf   = math.inf
 nro_eventos = 20
 
 def set_params(params):
-	tipo, lf, nro_eventos = params
+	c_tipo, s_tipo, lf, nro_eventos = params
 
 def show_params():
-	print(tipo,lf,nro_eventos)
+	print(c_tipo,s_tipo,lf,nro_eventos)
 
 def eventoChegada(tr,es,tf,hc,hs):
 	global tipo
@@ -23,12 +23,12 @@ def eventoChegada(tr,es,tf,hc,hs):
 	ts = 0
 	if es == 0:
 		es = 1
-		ts = generateTime(c_tipo)
+		ts = rnd.generateTime(s_tipo)
 		hs = tr + ts
 	else:
 		tf += 1
     
-	tec = roletaChegada(probC)
+	tec = rnd.generateTime(c_tipo)
 	hc = tr + tec
     
 	return tr,es,tf,hc,hs
@@ -39,7 +39,7 @@ def eventoSaida(tr,es,tf,hc,hs):
 	ts = 0
 	if tf > 0:
 		tf -= 1
-		ts = generateTime(s_tipo)
+		ts = rnd.generateTime(s_tipo)
 		hs = tr + ts
 	else:
 		es = 0
@@ -47,6 +47,9 @@ def eventoSaida(tr,es,tf,hc,hs):
     
 	return tr,es,tf,hc,hs
 
+def run():
+	show_params()
+	rnd.show_params()
 
 	global nro_eventos 
 
