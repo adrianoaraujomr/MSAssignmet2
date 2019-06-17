@@ -13,15 +13,25 @@ params = {
 "s_tipo" : "det",
 "lf" : math.inf,
 "nro_eventos" : 20,
+
 "a" : 17,
 "b" : 43,
-"m" : 100,
+"m" : 256,
 "seed" : 13,
-"lambd" : 1,
-"media" : 10,
-"devioP" : 2,
-"inf" : 0,
-"sup" : 99,
+
+"c_lambd" : 1,
+"c_media" : 10,
+"c_devioP" : 2,
+"c_inf" : 0,
+"c_sup" : 6,
+"c_det" : 2,
+
+"s_lambd" : 1,
+"s_media" : 10,
+"s_devioP" : 2,
+"s_inf" : 0,
+"s_sup" : 6,
+"s_det" : 2,
 }
 
 while msconsole:
@@ -32,19 +42,29 @@ while msconsole:
 		break
 	elif res == "run":
 		if queue == 1 :
-			mm1.set_params([params["c_tipo"],
-					params["s_tipo"],
-					params["lf"],
-					params["nro_eventos"]])
+			mm1.set_params_global([ params["c_tipo"],
+						params["s_tipo"],
+						params["lf"],
+						params["nro_eventos"]])
+
+			mm1.set_params_chegada([params["c_lambd"],
+						params["c_media"],
+						params["c_devioP"],
+						params["c_inf"],
+						params["c_sup"],
+						params["c_det"]])
+
+			mm1.set_params_servico([params["s_lambd"],
+						params["s_media"],
+						params["s_devioP"],
+						params["s_inf"],
+						params["s_sup"],
+						params["s_det"]])
+
 			rnd.set_params([params["a"],
 					params["b"],
 					params["m"],
-					params["seed"],
-					params["lambd"],
-					params["media"],
-					params["devioP"],
-					params["inf"],
-					params["sup"],])
+					params["seed"]])
 			mm1.run()
 #		else :
 #			mm2.run()

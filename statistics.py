@@ -14,4 +14,14 @@ def stats(in_data):
 	coef_var  = 100*desvio/media
 	coef_ass  = (media - moda)/mediana
 
+	print("meida =",media)
+	print("mediana =",mediana)
+	print("moda =",moda)
+	print("minimo =",minimo)
+	print("macimo =",maximo)
+	print("desvio padrao =",desvio)
+	print("variancia =",variancia)
+	print("coeficiente de variancia =",coef_var)
+	print("coeficiente de assimetria =",coef_ass)
+
 	return media, mediana, moda, minimo, maximo, desvio, variancia, coef_var, coef_ass
