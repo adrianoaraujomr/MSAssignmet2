@@ -30,6 +30,7 @@ def generateTime(params,tipo):
 
 
 def geraAleatorio():
+	global boo
 	global seed
 	global a
 	global b
@@ -37,6 +38,7 @@ def geraAleatorio():
 
 	if boo :
 		seed += datetime.now().microsecond
+		boo = False
 
 	seed = ((a * seed + b) % m)
 	

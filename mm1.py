@@ -94,6 +94,7 @@ def run():
 	i = 0
 	hc_ant = hc
 	aux = []
+	xua = []
 
 	while i < nro_eventos:
 		if hc < hs:
@@ -106,8 +107,11 @@ def run():
 		i += 1
 		if hc != hc_ant:
 			aux.append(hc - hc_ant)
+		if hs != math.inf:
+			xua.append(hs - tr)
 		hc_ant = hc
 
 	print("fim","\n")
-	print(aux,"\n")
+	print(aux)
+	print(xua,"\n")
 	st.stats(aux)
