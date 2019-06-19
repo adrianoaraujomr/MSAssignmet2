@@ -3,8 +3,6 @@
 from numpy import *
 from scipy import stats as stt
 
-alfa = .05
-
 def relatorio(servico,wait,tr,idle):
 	wt  = wait_time(wait,servico)
 	qp  = queue_prob(wait,servico)
@@ -14,9 +12,7 @@ def relatorio(servico,wait,tr,idle):
 
 	return [wt,qp,ip,st,syt]
 
-def simul_stats(matrix):
-	global alfa
-
+def simul_stats(matrix,alfa):
 	wt  = []
 	qp  = []
 	ip  = []
