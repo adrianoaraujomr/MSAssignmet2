@@ -40,9 +40,9 @@ def geraAleatorio():
 		seed += datetime.now().microsecond
 		boo = False
 
-	seed = ((a * seed + b) % m)
+	seed = ((a * seed + b) % (m - 1))
 	
-	return seed/m
+	return (seed + 1)/m
 
     
 def geraDistribuicao(pr,tipo):
@@ -52,13 +52,9 @@ def geraDistribuicao(pr,tipo):
 	if tipo == "unf":
 		return int(pr[3] + (pr[4] - pr[3])* aleat)
 	elif tipo == "nrm":
-		if aleat > 0: 
-			z=math.sqrt((-2*np.log(aleat)))*math.cos(aleat2)
-			return int(pr[1] + pr[2]*z)
+		#Não estara definida se aleat for igual a 0
+		z = math.sqrt((-2*np.log(aleat)))*math.cos(aleat2)
+		return int(pr[1] + pr[2]*z)
 	elif tipo == "exp":
-		if aleat > 0:
-			return math.ceil((-1/pr[0])*np.log(1-aleat))
-		else:
-			return aleat
-	else:
-		return aleat
+		#Não estara definida se aleat for igual a 1
+		return math.ceil((-1/pr[0])*np.log(1-aleat))

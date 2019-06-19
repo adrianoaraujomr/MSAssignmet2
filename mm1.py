@@ -18,6 +18,8 @@ s_param = [1,10,2,0,6,2]
 lf   = math.inf
 nro_eventos = 20
 
+chegadas = []
+saidas   = []
 
 
 def set_params_global(params):
@@ -51,13 +53,13 @@ def eventoChegada(tr,es,tf,hc,hs):
 	if es == 0:
 		es = 1
 		ts = rnd.generateTime(s_param,s_tipo)
-		print("ts =",ts)
+		saidas.append(ts)
 		hs = tr + ts
 	else:
 		tf += 1
     
 	tec = rnd.generateTime(c_param,c_tipo)
-	print("tec =",tec)
+	chegadas.append(tec)
 	hc = tr + tec
     
 	return tr,es,tf,hc,hs
@@ -71,7 +73,7 @@ def eventoSaida(tr,es,tf,hc,hs):
 	if tf > 0:
 		tf -= 1
 		ts = rnd.generateTime(s_param,s_tipo)
-		print("ts =",ts)
+		saidas.append(ts)
 		hs = tr + ts
 	else:
 		es = 0
@@ -83,7 +85,8 @@ def run():
 	show_params()
 	rnd.show_params()
 
-	global nro_eventos 
+	global nro_eventos
+	global chegadas, saidas
 
 	tr = 0
 	es = 0
@@ -91,27 +94,44 @@ def run():
 	hc = 0
 	hs = math.inf
 
+	idle  = 0
+	wait  = []
+	index = 0
+	nw    = 0
+
 	i = 0
 	hc_ant = hc
 	aux = []
 	xua = []
 
 	while i < nro_eventos:
-		if hc < hs:
+		if hc < hs and tf < lf:
 			tr,es,tf,hc,hs = eventoChegada(tr,es,tf,hc,hs)
+			if tf > 1:
+				wait.append(hc)
+				nw += 1
 		else:
+			if nw > 0:
+				wait[index] = hs - wait[index]
+				index += 1
+				nw    -= 1
 			tr,es,tf,hc,hs = eventoSaida(tr,es,tf,hc,hs)
+#		print('TR:{:d} ES:{:d} TF:{:d} HC:{:d} HS:{:d}'.format(tr,es,tf,hc,hs))
 
-		print("TR: ES: TF: HC: HS: ")
-		print(tr," ",es," ",tf," ",hc," ",hs)
+# Tempo ocioso 
+		if tf == 0:
+			idle += hc - tf
+
+		type(hc)
+		print('Relogio:{:d} Estado Servidor:{:d} Tamanho Fila:{:d} Proxima Chegada:{:d} Proxima Saida:{:d}'.format(tr,es,tf,hc,hs))
+		x = input()
 		i += 1
-		if hc != hc_ant:
-			aux.append(hc - hc_ant)
-		if hs != math.inf:
-			xua.append(hs - tr)
-		hc_ant = hc
 
+
+	print("chegadas",chegadas)
+	print("saidas  ",saidas)
 	print("fim","\n")
-	print(aux)
-	print(xua,"\n")
-	st.stats(aux)
+
+	rnd.boo = True
+	chegadas = []
+	saidas = []

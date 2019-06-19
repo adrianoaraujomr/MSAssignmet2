@@ -9,8 +9,8 @@ msconsole = True
 queue = 1
 
 params = {
-"c_tipo" : "det",
-"s_tipo" : "det",
+"c_tipo" : "nrm",
+"s_tipo" : "nrm",
 "lf" : math.inf,
 "nro_eventos" : 20,
 
