@@ -3,14 +3,16 @@
 import math
 import mm1
 import random_nro as rnd
+import statistics as st
 
 msconsole = True
 
 queue = 1
+repet = 15
 
 params = {
-"c_tipo" : "nrm",
-"s_tipo" : "nrm",
+"c_tipo" : "exp",
+"s_tipo" : "exp",
 "lf" : math.inf,
 "nro_eventos" : 20,
 
@@ -42,30 +44,36 @@ while msconsole:
 		break
 	elif res == "run":
 		if queue == 1 :
-			mm1.set_params_global([ params["c_tipo"],
-						params["s_tipo"],
-						params["lf"],
-						params["nro_eventos"]])
+			res = []
+			for i in range(repet):
+				print("Simulação :",i,":")
+				print("")
+				mm1.set_params_global([ params["c_tipo"],
+							params["s_tipo"],
+							params["lf"],
+							params["nro_eventos"]])
 
-			mm1.set_params_chegada([params["c_lambd"],
-						params["c_media"],
-						params["c_devioP"],
-						params["c_inf"],
-						params["c_sup"],
-						params["c_det"]])
+				mm1.set_params_chegada([params["c_lambd"],
+							params["c_media"],
+							params["c_devioP"],
+							params["c_inf"],
+							params["c_sup"],
+							params["c_det"]])
 
-			mm1.set_params_servico([params["s_lambd"],
-						params["s_media"],
-						params["s_devioP"],
-						params["s_inf"],
-						params["s_sup"],
-						params["s_det"]])
+				mm1.set_params_servico([params["s_lambd"],
+							params["s_media"],
+							params["s_devioP"],
+							params["s_inf"],
+							params["s_sup"],
+							params["s_det"]])
 
-			rnd.set_params([params["a"],
-					params["b"],
-					params["m"],
-					params["seed"]])
-			mm1.run()
+				rnd.set_params([params["a"],
+						params["b"],
+						params["m"],
+						params["seed"]])
+				res.append(mm1.run())
+#				print(res)
+			st.simul_stats(res)
 #		else :
 #			mm2.run()
 	elif res == "help":

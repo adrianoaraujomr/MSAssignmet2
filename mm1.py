@@ -53,15 +53,15 @@ def eventoChegada(tr,es,tf,hc,hs):
 	if es == 0:
 		es = 1
 		ts = rnd.generateTime(s_param,s_tipo)
-		saidas.append(ts)
 		hs = tr + ts
+		saidas.append(ts)
 	else:
 		tf += 1
     
 	tec = rnd.generateTime(c_param,c_tipo)
-	chegadas.append(tec)
 	hc = tr + tec
-    
+	chegadas.append(tec)
+
 	return tr,es,tf,hc,hs
     
 def eventoSaida(tr,es,tf,hc,hs):
@@ -73,11 +73,11 @@ def eventoSaida(tr,es,tf,hc,hs):
 	if tf > 0:
 		tf -= 1
 		ts = rnd.generateTime(s_param,s_tipo)
-		saidas.append(ts)
 		hs = tr + ts
+		saidas.append(ts)
 	else:
 		es = 0
-		hs = math.inf
+		hs = 999999
     
 	return tr,es,tf,hc,hs
 
@@ -92,22 +92,22 @@ def run():
 	es = 0
 	tf = 0
 	hc = 0
-	hs = math.inf
+	hs = 999999
 
+	rnd.boo  = True
+	chegadas = []
+	saidas   = []
 	idle  = 0
 	wait  = []
 	index = 0
 	nw    = 0
 
 	i = 0
-	hc_ant = hc
-	aux = []
-	xua = []
 
 	while i < nro_eventos:
 		if hc < hs and tf < lf:
 			tr,es,tf,hc,hs = eventoChegada(tr,es,tf,hc,hs)
-			if tf > 1:
+			if tf >= 1:
 				wait.append(hc)
 				nw += 1
 		else:
@@ -116,22 +116,27 @@ def run():
 				index += 1
 				nw    -= 1
 			tr,es,tf,hc,hs = eventoSaida(tr,es,tf,hc,hs)
-#		print('TR:{:d} ES:{:d} TF:{:d} HC:{:d} HS:{:d}'.format(tr,es,tf,hc,hs))
 
-# Tempo ocioso 
 		if tf == 0:
-			idle += hc - tf
+			idle += hc - tr#		
+#		print("chegadas",chegadas)
+#		print("saidas  ",saidas)
+#		print("esperas ",wait)
+#		print("ociosos ",idle)
+		print('TR:{:03d} ES:{:03d} TF:{:03d} HC:{:03d} HS:{:06d}'.format(tr,es,tf,hc,hs))
+#		type(hc)
+#		print('Relogio:{:d} Estado Servidor:{:d} Tamanho Fila:{:d} Proxima Chegada:{:d} Proxima Saida:{:d}'.format(tr,es,tf,hc,hs))
+#		x = input()
 
-		type(hc)
-		print('Relogio:{:d} Estado Servidor:{:d} Tamanho Fila:{:d} Proxima Chegada:{:d} Proxima Saida:{:d}'.format(tr,es,tf,hc,hs))
-		x = input()
 		i += 1
 
-
-	print("chegadas",chegadas)
-	print("saidas  ",saidas)
+	for i in range(index,len(wait)):
+		wait[i] = tr - wait[i]
+	wait = [x for x in wait if x > 0]
+#	print("chegadas",chegadas)
+#	print("saidas  ",saidas)
+#	print("esperas ",wait)
+#	print("ociosos ",idle)
 	print("fim","\n")
 
-	rnd.boo = True
-	chegadas = []
-	saidas = []
+	return st.relatorio(saidas,wait,tr,idle)

@@ -57,4 +57,4 @@ def geraDistribuicao(pr,tipo):
 		return int(pr[1] + pr[2]*z)
 	elif tipo == "exp":
 		#Não estara definida se aleat for igual a 1
-		return math.ceil((-1/pr[0])*np.log(1-aleat))
+		return int(math.ceil((-1/pr[0])*np.log(1-aleat)))
