@@ -11,7 +11,7 @@ queue = 1
 repet = 15
 
 params = {
-"alfa"  = 0.05,
+"alfa"  : 0.05,
 "c_tipo" : "exp",
 "s_tipo" : "exp",
 "lf" : math.inf,
@@ -74,7 +74,8 @@ while msconsole:
 						params["seed"]])
 				res.append(mm1.run())
 #				print(res)
-			st.simul_stats(res,params["alfa"])
+			st.simul_stats(res,params["alfa"]
+)
 #		else :
 #			mm2.run()
 	elif res == "help":

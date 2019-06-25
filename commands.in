@@ -3,11 +3,11 @@ run  : roda a simulação
 set $var : atribui um valor para a variavel $var
 set_model $mod : muda o modelo de fila usado para simulação
 set_dist $t $d : muda o tipo de distribuicao para uma variavel $t
-export : gera um txt com os dados de saida da ultima simulação
 
 lista de possiveis opções para cada variavel:
 
 $var
+ - alfa : valor de alfa para calculo de estatisticas
  - lf : tamanho da fila
  - nro_eventos : numero maximo de loops da simulação
  - a : parametro a da geração de números aleatorios
