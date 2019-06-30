@@ -17,6 +17,7 @@ s_param = [1,10,2,0,6,2]
 #	[5] t_det = 2
 lf   = math.inf
 nro_eventos = 20
+nro_servidr = 1
 
 chegadas = []
 saidas   = []
@@ -39,19 +40,22 @@ def show_params():
 	print("s_param =",s_param)
 	print("lf =",lf)
 	print("nro_eventos =",nro_eventos)
+	print("nro_servidr =",nro_servidr)
 	print("")
 
 def eventoChegada(tr,es,tf,hc,hs):
+	global nro_servidr
 	global s_param
 	global s_tipo
 	global c_param
 	global c_tipo
+
 	tec = 0
 	tr = hc
 	ts = 0
 
-	if es == 0:
-		es = 1
+	if es < nro_servidr:
+		es += 1
 		ts = rnd.generateTime(s_param,s_tipo)
 		hs = tr + ts
 		saidas.append(ts)
@@ -67,11 +71,17 @@ def eventoChegada(tr,es,tf,hc,hs):
 def eventoSaida(tr,es,tf,hc,hs):
 	global s_param
 	global s_tipo
+
 	tr = hs
 	ts = 0
 
 	if tf > 0:
 		tf -= 1
+		ts = rnd.generateTime(s_param,s_tipo)
+		hs = tr + ts
+		saidas.append(ts)
+	elif es > 1:
+		es -= 1
 		ts = rnd.generateTime(s_param,s_tipo)
 		hs = tr + ts
 		saidas.append(ts)
@@ -81,12 +91,14 @@ def eventoSaida(tr,es,tf,hc,hs):
     
 	return tr,es,tf,hc,hs
 
-def run():
+def run(nro_servidores):
 	show_params()
 	rnd.show_params()
 
-	global nro_eventos
+	global nro_eventos, nro_servidr
 	global chegadas, saidas
+
+	nro_servidr = nro_servidores
 
 	tr = 0
 	es = 0
